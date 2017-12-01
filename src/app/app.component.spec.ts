@@ -1,5 +1,11 @@
 import { TestBed, async } from '@angular/core/testing';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/toArray';
+
 import { AppComponent } from './app.component';
+import { IAPPState } from './store';
+import { CounterActions } from './actions';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({

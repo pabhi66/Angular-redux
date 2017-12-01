@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {NgRedux} from 'ng2-redux';
-import { OnDestroy } from '@angular/core';
+import { NgRedux, select} from 'ng2-redux';
+import { Observable } from 'rxjs/Observable';
 
 import { IAPPState } from './store';
 import { CounterActions } from './actions';
@@ -10,19 +10,13 @@ import { CounterActions } from './actions';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy {
+
+export class AppComponent {
   title = 'app';
-  counter: number;
+  @select() readonly counter$: Observable<number>;
   subscription;
 
-  constructor(private ngRedux: NgRedux<IAPPState>, private actions: CounterActions) {
-    this.subscription = ngRedux.select<number>('counter')
-      .subscribe(newCount => this.counter = newCount);
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  constructor(private ngRedux: NgRedux<IAPPState>, private actions: CounterActions) {}
 
   increment() {
     this.ngRedux.dispatch(this.actions.increment());
